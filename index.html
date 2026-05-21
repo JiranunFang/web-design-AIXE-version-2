@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,17 +8,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --ge-navy: #0d1520; /* Darker navy for more high-tech feel */
+            --ge-navy: #0d1520;
             --ge-blue: #005CB9;
-            --ge-cyan: #00E5FF; /* Brighter neon cyan */
+            --ge-cyan: #00E5FF;
             --primary: var(--ge-cyan);
             
-            --bg-deep: #070b12; /* Deep space background */
-            --panel-bg: rgba(13, 22, 35, 0.75); /* Darker hologram panel */
+            --bg-deep: #070b12;
+            --panel-bg: rgba(13, 22, 35, 0.75);
             --text-main: #FFFFFF;
             --text-dim: #8b9bb4;
 
-            /* Vivid Module Colors for Neon Glow */
             --color-core: #FFD700;
             --color-icu: #FF3E3E;
             --color-or: #00FF88;
@@ -34,7 +32,6 @@
 
         /* --- High-Tech Cyber Background --- */
         .bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 50% 40%, #15243b 0%, var(--bg-deep) 80%); }
-        /* Grid pattern updated to match the cyber mesh look in the reference image */
         .bg-grid { position: absolute; width: 200%; height: 200%; top: -50%; left: -50%; background-image: linear-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.05) 1px, transparent 1px); background-size: 60px 60px; transform: perspective(1000px) rotateX(70deg); animation: gridMove 40s linear infinite; }
         .bg-scanline { position: absolute; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent, rgba(0, 229, 255, 0.02), transparent); top: -100%; animation: scanMove 8s linear infinite; }
 
@@ -60,11 +57,10 @@
         .split-layout { display: flex; flex-wrap: wrap; gap: 60px; align-items: center; justify-content: center; }
 
         /* ========================================================= */
-        /* [UPDATE] HIGH-TECH NEON 3D HEXAGONS (Match Reference Image) */
+        /* HIGH-TECH NEON 3D HEXAGONS */
         /* ========================================================= */
         .hex-stage { position: relative; width: 440px; height: 440px; }
         .hex-box { position: absolute; width: 140px; height: 160px; left: 50%; top: 50%; margin-left: -70px; margin-top: -80px; cursor: pointer; z-index: 2; transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-        /* Add glowing drop-shadow filter to the floating wrapper */
         .hex-float { width: 100%; height: 100%; animation: floatAni 4s ease-in-out infinite; filter: drop-shadow(0 0 10px rgba(0,0,0,0.8)); transition: 0.3s; }
         
         .hex-shape { 
@@ -72,22 +68,20 @@
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); 
             display: flex; align-items: center; justify-content: center; 
             transition: 0.5s;
-            /* Outer Glowing Border Effect (Using background + padding) */
             background: var(--this-color-low); 
             padding: 3px; 
             box-shadow: 0 0 20px var(--this-color-low);
         }
 
-        /* 1. Dark Metallic Core (Layer 1) */
         .hex-shape::before {
             content: ''; position: absolute; inset: 3px;
             background: radial-gradient(circle at 50% 0%, #989899 0%, #9cbbe4 80%);
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
             z-index: 0;
             box-shadow: inset 0 -10px 20px rgba(0,0,0,0.8), inset 0 2px 10px rgba(255,255,255,0.1);
+            transition: 0.5s;
         }
 
-        /* 2. Inner Glowing Wireframe Line (Layer 2 - match image detail) */
         .hex-shape::after {
             content: ''; position: absolute; inset: 8px;
             background: transparent;
@@ -98,40 +92,49 @@
             transition: 0.5s;
         }
 
-        /* Text Label */
         .hex-label { 
             position: relative; 
             z-index: 2; 
-            font-size: 1.2rem; /* ปรับให้ตัวใหญ่ขึ้น (เดิม 0.85rem) */
-            font-weight: 800; /* ปรับให้หนาขึ้นเพื่อความชัดเจน */
+            font-size: 1.2rem;
+            font-weight: 800;
             letter-spacing: 1px; 
-            color: #0f0e0e; /* เปลี่ยนเป็นสีขาวสว่าง 100% */
+            color: #0f0e0e; 
             text-transform: uppercase; 
             text-align: center; 
             pointer-events: none; 
-    /* เพิ่มเงาดำหนาๆ ด้านหลังให้ตัดกับพื้นหลังโลหะ และแสงเรืองสีขาวอ่อนๆ */
-         /*   text-shadow: 0 3px 8px rgb(255, 253, 253), 0 0 10px rgba(255,255,255,0.4); */
+            text-shadow: 0 3px 8px rgb(246, 247, 255), 0 0 10px rgba(255,255,255,0.4);
             transition: 0.4s;
             line-height: 1.2;
-}
+        }
         
-        /* HOVER / ACTIVE STATE */
-        .hex-box:hover { z-index: 10; }
-        .hex-box:hover .hex-shape { 
-            background: var(--this-color); /* Brighten outer border */
+        /* 1. จุดที่แก้: รวม Hover และ Active ให้เหมือนกันเป๊ะ เพื่อความโดดเด่น */
+        .hex-box:hover, .hex-box.active { z-index: 10; }
+        
+        .hex-box:hover .hex-shape, 
+        .hex-box.active .hex-shape { 
+            background: var(--this-color); 
             transform: scale(1.08); 
         }
-        .hex-box:hover .hex-float { filter: drop-shadow(0 0 20px var(--this-color)); }
-        .hex-box:hover .hex-shape::before { background: radial-gradient(circle at 50% 0%, #2a415e 0%, #0b121c 80%); } /* Lighter core on hover */
-        .hex-box:hover .hex-shape::after { opacity: 1; inset: 6px; border-color: var(--this-color); box-shadow: inset 0 0 15px var(--this-color-low); }
-        .hex-box:hover .hex-label { font-weight: 800; color: #fff; letter-spacing: 2px; text-shadow: 0 0 10px var(--this-color), 0 0 20px var(--this-color); transform: scale(1.1); }
+        
+        .hex-box:hover .hex-float, 
+        .hex-box.active .hex-float { filter: drop-shadow(0 0 20px var(--this-color)); }
+        
+        .hex-box:hover .hex-shape::before, 
+        .hex-box.active .hex-shape::before { background: radial-gradient(circle at 50% 0%, #2a415e 0%, #0b121c 80%); }
+        
+        .hex-box:hover .hex-shape::after, 
+        .hex-box.active .hex-shape::after { opacity: 1; inset: 6px; border-color: var(--this-color); box-shadow: inset 0 0 15px var(--this-color-low); }
+        
+        .hex-box:hover .hex-label, 
+        .hex-box.active .hex-label { 
+            color: #FFFFFF; 
+            font-weight: 800; 
+            letter-spacing: 2px; 
+            text-shadow: 0 0 10px var(--this-color), 0 0 20px var(--this-color), 0 2px 5px rgba(0,0,0,1); 
+            transform: scale(1.1); 
+        }
 
-        .hex-box.active .hex-shape { background: var(--this-color); transform: scale(1.1); }
-        .hex-box.active .hex-float { filter: drop-shadow(0 0 25px var(--this-color)); }
-        .hex-box.active .hex-shape::after { opacity: 1; inset: 5px; border-color: #fff; box-shadow: inset 0 0 20px var(--this-color); }
-        .hex-box.active .hex-label { color: var(--this-color); font-weight: 800; text-shadow: 0 0 15px rgba(0,0,0,1); }
-
-        /* Setup distinct colors and faded states for each point */
+        /* Setup distinct colors */
         .hex-box.p-core { --this-color: var(--color-core); --this-color-low: rgba(255, 215, 0, 0.25); --this-color-line: rgba(255, 215, 0, 0.4); }
         .hex-box.p1 { transform: translate(0, -165px); --this-color: var(--color-icu); --this-color-low: rgba(255, 62, 62, 0.25); --this-color-line: rgba(255, 62, 62, 0.4); }
         .hex-box.p2 { transform: translate(143px, -82px); --this-color: var(--color-or); --this-color-low: rgba(0, 255, 136, 0.25); --this-color-line: rgba(0, 255, 136, 0.4); }
@@ -142,9 +145,8 @@
         .hex-box.p1 .hex-float { animation-delay: 0.2s; } .hex-box.p2 .hex-float { animation-delay: 0.7s; } .hex-box.p3 .hex-float { animation-delay: 1.2s; } .hex-box.p4 .hex-float { animation-delay: 1.7s; } .hex-box.p5 .hex-float { animation-delay: 2.2s; }
         @keyframes floatAni { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 
-        /* --- Info Panel (Hologram Dashboard Look) --- */
+        /* --- Info Panel --- */
         .info-side { flex: 0 1 440px; background: var(--panel-bg); border: 1px solid rgba(0, 229, 255, 0.2); border-top: 4px solid var(--primary); padding: 55px 45px; border-radius: 12px; min-height: 420px; display: flex; flex-direction: column; justify-content: center; backdrop-filter: blur(25px); box-shadow: 0 0 40px rgba(0, 229, 255, 0.05), inset 0 0 20px rgba(0, 229, 255, 0.05); transition: all 0.5s ease; transform: translateY(-30px); position: relative; overflow: hidden; }
-        /* Add decorative corner accents to panel */
         .info-side::before, .info-side::after { content: ''; position: absolute; width: 30px; height: 30px; border: 2px solid transparent; }
         .info-side::before { top: 15px; left: 15px; border-top-color: rgba(255,255,255,0.3); border-left-color: rgba(255,255,255,0.3); }
         .info-side::after { bottom: 15px; right: 15px; border-bottom-color: rgba(255,255,255,0.3); border-right-color: rgba(255,255,255,0.3); }
@@ -165,29 +167,24 @@
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
         /* ========================================================= */
-        /* [UPDATE] PROFESSIONAL HEALTHCARE CONTENT SECTIONS */
+        /* PROFESSIONAL HEALTHCARE CONTENT SECTIONS */
         /* ========================================================= */
         .reveal { opacity: 0; transform: translateY(60px); transition: 1.2s cubic-bezier(0.15, 0.85, 0.35, 1); will-change: transform, opacity; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         .premium-section { padding: 160px 6%; background: #ffffff; color: #1a2a3d; position: relative; overflow: hidden; border-bottom: 1px solid rgba(0, 92, 185, 0.05); }
         .premium-section.bg-light-alt { background: linear-gradient(180deg, #f4f7fb 0%, #ffffff 100%); }
-
-        /* Added a subtle medical grid pattern to background for pro look */
         .premium-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(rgba(0, 92, 185, 0.05) 1px, transparent 1px); background-size: 30px 30px; pointer-events: none; z-index: 0; }
 
         .section-layout { display: flex; align-items: center; justify-content: center; max-width: 1300px; margin: 0 auto; position: relative; gap: 50px; z-index: 2; }
         .section-layout.reverse { flex-direction: row-reverse; }
 
-        /* Image Box - Cleaner shadows and rounded corners */
         .premium-img-box { flex: 0 0 50%; position: relative; border-radius: 16px; overflow: hidden; box-shadow: 0 25px 60px -15px rgba(13, 22, 35, 0.2); border: 1px solid rgba(0,0,0,0.04); }
         .premium-img-box img { width: 100%; height: auto; display: block; transition: transform 2s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .premium-img-box:hover img { transform: scale(1.03); }
-        .img-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0, 92, 185, 0.1), transparent); mix-blend-mode: multiply; pointer-events: none; }
+        .img-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0, 92, 185, 0.1), transparent); mix-blend-mode: multiply; pointer-events: none; z-index: 5;}
 
-        /* Text Box - Enterprise Software Clean Look */
         .premium-text-box { flex: 1; z-index: 10; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(0, 92, 185, 0.08); padding: 70px 50px; border-radius: 20px; box-shadow: 0 30px 60px -20px rgba(13, 22, 35, 0.1); position: relative; }
-        /* Reduce overlap for a cleaner, modern corporate grid */
         .section-layout .premium-text-box { margin-left: -6%; }
         .section-layout.reverse .premium-text-box { margin-left: 0; margin-right: -6%; }
 
@@ -207,58 +204,106 @@
         .btn-premium-link:hover { border-bottom-color: var(--ge-blue); letter-spacing: 2px; }
         .btn-premium-link:hover .arrow { transform: translateX(8px); }
 
-        /* --- SECTION 5 AUTOMATIC CAROUSEL --- */
+        /* --- SECTION 5 AUTOMATIC & MANUAL CAROUSEL --- */
         .idh-carousel { position: relative; width: 100%; height: 460px; overflow: hidden; background: #f8fafc; border-radius: 16px; }
         .idh-slides-wrapper { width: 100%; height: 100%; position: relative; }
-        .idh-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; display: flex; align-items: center; justify-content: center; }
+        .idh-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; display: flex; align-items: center; justify-content: center; z-index: 1; }
         .idh-slide.active { opacity: 1; z-index: 2; }
         .idh-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
         
         .carousel-indicators { position: absolute; bottom: 25px; left: 40px; display: flex; gap: 8px; z-index: 15; background: rgba(255,255,255,0.8); padding: 10px 18px; border-radius: 30px; backdrop-filter: blur(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .indicator-dot { width: 8px; height: 8px; background: rgba(13, 22, 35, 0.2); border-radius: 50%; transition: all 0.3s ease; cursor: pointer; }
+        .indicator-dot:hover { background: rgba(0, 92, 185, 0.5); }
         .indicator-dot.active { background: var(--ge-blue); width: 24px; border-radius: 4px; }
+
+        /* 2. จุดที่แก้: เพิ่มลูกศรเลื่อนซ้ายขวา สไตล์หรูหรา (Apple Style) */
+        .idh-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px); /* กระจกฝ้า */
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            color: #1a2a3d;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 20;
+            opacity: 0; /* ซ่อนไว้เมื่อไม่ชี้เมาส์ */
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .idh-nav-prev { left: 20px; }
+        .idh-nav-next { right: 20px; }
+        
+        /* แสดงปุ่มเมื่อเอาเมาส์ชี้ไปที่กล่องรูป */
+        .idh-carousel:hover .idh-nav-btn { opacity: 1; }
+        
+        /* Effect ตอนเอาเมาส์ชี้ปุ่ม */
+        .idh-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-50%) scale(1.08);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
 
         /* Footer */
         footer { padding: 50px 5%; background: #05080d; text-align: center; color: rgba(255,255,255,0.3); font-size: 0.85rem; border-top: 1px solid rgba(0, 229, 255, 0.1); letter-spacing: 2px; }
         footer strong { color: rgba(255,255,255,0.7); }
 
-        /* Responsive Adjustments */
+        /* ========================================================= */
+        /* 3. จุดที่แก้: Responsive ปรับปรุงให้หรูหราบนมือถือ (High-End Feel) */
+        /* ========================================================= */
         @media (max-width: 1024px) {
             .split-layout { gap: 40px; }
             .premium-img-box { flex: 0 0 50%; }
             .premium-text-box { padding: 50px 40px; }
             .premium-title { font-size: 2.4rem; }
         }
+        
         @media (max-width: 768px) { 
-            .hero-header p { font-size: 2.2rem; } 
-            .split-layout { flex-direction: column-reverse; }
-            .hex-stage { width: 340px; height: 340px; transform: scale(0.85); margin-bottom: -40px; }
-            .info-side { width: 100%; padding: 40px 30px; }
+            /* เพิ่มความโปร่งให้ Hero Section */
+            .hero-container { padding-top: 130px; padding-bottom: 60px; }
+            .hero-header p { font-size: 2.4rem; margin-top: 15px; } 
+            .split-layout { flex-direction: column-reverse; gap: 50px; }
             
+            /* ปรับ Hexagon ให้สมดุล */
+            .hex-stage { width: 340px; height: 340px; transform: scale(0.8); margin-bottom: -30px; }
+            .info-side { width: 100%; padding: 40px 30px; border-radius: 16px; }
+            
+            /* ปรับโครงสร้าง Premium Section ไม่ให้ดูอึดอัด */
+            .premium-section { padding: 80px 6%; }
             .section-layout, .section-layout.reverse { flex-direction: column; gap: 0; }
+            
+            /* ปรับกล่องภาพให้มุมมนเนียนๆ */
             .premium-img-box, .premium-text-box { flex: 0 0 100%; width: 100%; margin: 0 !important; }
-            .premium-img-box { border-radius: 16px 16px 0 0; }
-            .premium-text-box { margin-top: -30px; border-radius: 20px; padding: 40px 30px; box-shadow: 0 -20px 40px rgba(0,0,0,0.08); }
+            .premium-img-box { border-radius: 20px 20px 0 0; }
+            
+            /* เลื่อนกล่องข้อความมาซ้อนกันนิดๆ เพื่อความมีมิติ (Depth) */
+            .premium-text-box { 
+                margin-top: -30px !important; 
+                border-radius: 20px; 
+                padding: 45px 30px; 
+                box-shadow: 0 -15px 40px rgba(13, 22, 35, 0.06); /* เงาบางๆ ดูแพง */
+                border: 1px solid rgba(255,255,255,1);
+            }
             .premium-title { font-size: 2.2rem; }
+            
+            /* Carousel มือถือ */
             .idh-carousel { height: 320px; }
-            .carousel-indicators { left: 50%; transform: translateX(-50%); bottom: 20px; }
+            .carousel-indicators { left: 50%; transform: translateX(-50%); bottom: 20px; padding: 8px 15px; }
+            
+            /* ปุ่มลูกศรมือถือ ให้แสดงค้างไว้แบบจางๆ เพื่อให้รู้ว่าปัด/กดได้ */
+            .idh-nav-btn { opacity: 0.8; width: 40px; height: 40px; font-size: 1rem; }
+            .idh-nav-prev { left: 10px; }
+            .idh-nav-next { right: 10px; }
         }
-
-
-.hex-box:hover .hex-label { 
-    color: #FFFFFF; 
-    letter-spacing: 1.5px; 
-    /* เรืองแสงเป็นสีประจำโมดูล */
-    text-shadow: 0 0 12px var(--this-color), 0 0 25px var(--this-color), 0 2px 5px rgba(0,0,0,1); 
-    transform: scale(1.08); 
-}
-
-.hex-box.active .hex-label { 
-    color: #FFFFFF; /* ตอนกดเลือก ก็ยังคงสีขาวไว้ให้อ่านง่ายสุด */
-    font-weight: 800; 
-    text-shadow: 0 0 15px var(--this-color), 0 0 30px var(--this-color), 0 3px 8px rgba(0,0,0,1); 
-}
-
     </style>
 </head>
 <body>
@@ -389,6 +434,10 @@
         <section class="premium-section reveal">
             <div class="section-layout">
                 <div class="premium-img-box idh-carousel">
+                    <!-- ปุ่ม Navigation Manual (Apple Style) -->
+                    <div class="idh-nav-btn idh-nav-prev" onclick="manualChangeSlide(-1)">❮</div>
+                    <div class="idh-nav-btn idh-nav-next" onclick="manualChangeSlide(1)">❯</div>
+                    
                     <div class="idh-slides-wrapper">
                         <div class="idh-slide active">
                             <img src="https://www.interdiscount.ch/static-shops/products/720/e12e565efadc3f2d4917949e6f7b7753d5cf.jpg" alt="IDH Front Dynamic Angle View">
@@ -402,9 +451,10 @@
                     </div>
                     <div class="img-overlay"></div>
                     <div class="carousel-indicators">
-                        <span class="indicator-dot active"></span>
-                        <span class="indicator-dot"></span>
-                        <span class="indicator-dot"></span>
+                        <!-- ผูกฟังก์ชัน onclick ให้จุดเผื่อผู้ใช้ต้องการกดไปรูปใดๆ เลย -->
+                        <span class="indicator-dot active" onclick="goToSlide(0)"></span>
+                        <span class="indicator-dot" onclick="goToSlide(1)"></span>
+                        <span class="indicator-dot" onclick="goToSlide(2)"></span>
                     </div>
                 </div>
                 <div class="premium-text-box">
@@ -445,41 +495,72 @@
                 document.getElementById('d-desc').innerText = desc;
                 
                 const infoPanel = document.getElementById('infoPanel');
-                // อัปเดตสี Panel และส่วนต่างๆ ให้ตรงกับปุ่มที่กดตามภาพ Reference
                 infoPanel.style.borderTopColor = color; 
                 infoPanel.style.boxShadow = `0 0 40px ${color.replace(')', ', 0.15)').replace('rgb', 'rgba')}, inset 0 0 20px ${color.replace(')', ', 0.05)').replace('rgb', 'rgba')}`;
                 
                 document.getElementById('activeTag').style.color = color;
                 document.getElementById('d-btn').style.backgroundColor = color;
                 document.getElementById('d-btn').style.boxShadow = `0 0 15px ${color.replace(')', ', 0.5)').replace('rgb', 'rgba')}`;
-                // จัดการสีตัวอักษรของปุ่ม
                 document.getElementById('d-btn').style.color = (color === 'var(--color-core)' || color === '#FFD700' || color === 'var(--color-or)') ? '#000' : '#fff';
             }, 300);
         }
 
-        // ฟังก์ชันจัดการภาพสไลด์อัตโนมัติ IDH (Section 5)
+        // --- ส่วนระบบ Carousel ที่ปรับแต่งใหม่ให้มีระบบ Auto และ Manual ---
         let idhCurrentIndex = 0;
         const idhSlides = document.querySelectorAll('.idh-slide');
         const idhDots = document.querySelectorAll('.indicator-dot');
         const totalIdhSlides = idhSlides.length;
+        let idhAutoTimer; // กำหนดตัวแปรสำหรับพัก/รีเซ็ตเวลา Slide
 
-        function autoCycleIdhCarousel() {
-            if (totalIdhSlides === 0) return;
-            
-            idhSlides[idhCurrentIndex].classList.remove('active');
-            idhDots[idhCurrentIndex].classList.remove('active');
-            
-            idhCurrentIndex = (idhCurrentIndex + 1) % totalIdhSlides;
+        // ฟังก์ชันอัปเดต UI ของสไลด์ (ซ่อนอันเดิม โชว์อันใหม่)
+        function updateSlideUI() {
+            document.querySelectorAll('.idh-slide').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.indicator-dot').forEach(d => d.classList.remove('active'));
             
             idhSlides[idhCurrentIndex].classList.add('active');
             idhDots[idhCurrentIndex].classList.add('active');
         }
 
-        if (totalIdhSlides > 0) {
-            setInterval(autoCycleIdhCarousel, 3500);
+        // ฟังก์ชันเลื่อนอัตโนมัติ (จะใช้โดน setInterval)
+        function autoCycleIdhCarousel() {
+            if (totalIdhSlides === 0) return;
+            idhCurrentIndex = (idhCurrentIndex + 1) % totalIdhSlides;
+            updateSlideUI();
         }
 
-        // ฟังก์ชัน Scroll Reveal Animation
+        // เริ่มต้นการเลื่อนอัตโนมัติ
+        function startAutoSlide() {
+            if (totalIdhSlides > 0) {
+                // เคลียร์อันเก่าก่อนกันการทับซ้อน
+                clearInterval(idhAutoTimer); 
+                idhAutoTimer = setInterval(autoCycleIdhCarousel, 4000);
+            }
+        }
+
+        // เมื่อกดปุ่มลูกศร ซ้าย-ขวา (-1 คือซ้าย, 1 คือขวา)
+        function manualChangeSlide(direction) {
+            idhCurrentIndex = idhCurrentIndex + direction;
+            // เช็คว่ากดเกินจำนวนที่มีไหม
+            if(idhCurrentIndex < 0) {
+                idhCurrentIndex = totalIdhSlides - 1;
+            } else if(idhCurrentIndex >= totalIdhSlides) {
+                idhCurrentIndex = 0;
+            }
+            updateSlideUI();
+            startAutoSlide(); // รีเซ็ตเวลาอัตโนมัติใหม่หลังจากที่ผู้ใช้กดเอง
+        }
+
+        // เมื่อผู้ใช้กดจุด Dot ด้านล่างภาพ
+        function goToSlide(index) {
+            idhCurrentIndex = index;
+            updateSlideUI();
+            startAutoSlide(); // รีเซ็ตเวลา
+        }
+
+        // รัน Auto Slide ทันทีที่โหลดเสร็จ
+        startAutoSlide();
+
+        // --- ส่วนแอนิเมชันตอนเลื่อนจอลงมา ---
         const observerOptions = { threshold: 0.15, rootMargin: "0px 0px -100px 0px" };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -493,5 +574,3 @@
     </script>
 </body>
 </html>
-
-```
