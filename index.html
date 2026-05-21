@@ -30,6 +30,13 @@
 
         body { background-color: var(--bg-deep); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
 
+        /* ========================================================= */
+        /* MULTI-LANGUAGE SYSTEM (ระบบสลับภาษาด้วย CSS) */
+        /* ========================================================= */
+        /* หาก body มี class ไหน ซ่อนอีกภาษาทันที ช่วยให้เขียน HTML ง่ายและไม่สับสน */
+        body.lang-en .th { display: none !important; }
+        body.lang-th .en { display: none !important; }
+
         /* --- High-Tech Cyber Background --- */
         .bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 50% 40%, #15243b 0%, var(--bg-deep) 80%); }
         .bg-grid { position: absolute; width: 200%; height: 200%; top: -50%; left: -50%; background-image: linear-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.05) 1px, transparent 1px); background-size: 60px 60px; transform: perspective(1000px) rotateX(70deg); animation: gridMove 40s linear infinite; }
@@ -42,10 +49,17 @@
         header { padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(7, 11, 18, 0.8); backdrop-filter: blur(20px); position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0, 229, 255, 0.1); }
         .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 2px; }
         .logo span { color: var(--primary); text-shadow: 0 0 10px rgba(0, 229, 255, 0.5); }
+        .nav-controls { display: flex; align-items: center; gap: 2rem; }
         .nav-links { display: flex; gap: 2.5rem; align-items: center; }
         .nav-links a { color: #fff; text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: 0.3s; opacity: 0.7; letter-spacing: 1px; }
         .nav-links a:hover { color: var(--primary); opacity: 1; text-shadow: 0 0 8px var(--primary); }
-        .btn-demo { border: 1px solid var(--primary); padding: 9px 22px; color: var(--primary) !important; border-radius: 4px; font-weight: 800; text-transform: uppercase; font-size: 0.8rem !important; opacity: 1 !important; box-shadow: inset 0 0 10px rgba(0, 229, 255, 0.2); }
+        
+        /* ปุ่มสลับภาษาแบบไฮเอนด์ */
+        .lang-switcher { display: flex; gap: 8px; font-size: 0.8rem; font-weight: 800; color: var(--text-dim); letter-spacing: 1px; }
+        .lang-btn { cursor: pointer; transition: 0.3s; opacity: 0.5; padding: 2px 6px; }
+        .lang-btn:hover, .lang-btn.active { opacity: 1; color: var(--primary); text-shadow: 0 0 8px var(--primary); }
+
+        .btn-demo { border: 1px solid var(--primary); padding: 9px 22px; color: var(--primary) !important; border-radius: 4px; font-weight: 800; text-transform: uppercase; font-size: 0.8rem !important; opacity: 1 !important; box-shadow: inset 0 0 10px rgba(0, 229, 255, 0.2); text-decoration: none; }
         .btn-demo:hover { background: var(--primary); color: #000 !important; box-shadow: 0 0 20px rgba(0, 229, 255, 0.6); }
 
         /* --- Hero Section --- */
@@ -56,9 +70,7 @@
         .hero-header p strong { font-weight: 800; color: #fff; }
         .split-layout { display: flex; flex-wrap: wrap; gap: 60px; align-items: center; justify-content: center; }
 
-        /* ========================================================= */
-        /* HIGH-TECH NEON 3D HEXAGONS */
-        /* ========================================================= */
+        /* --- Hexagon Grid --- */
         .hex-stage { position: relative; width: 440px; height: 440px; }
         .hex-box { position: absolute; width: 140px; height: 160px; left: 50%; top: 50%; margin-left: -70px; margin-top: -80px; cursor: pointer; z-index: 2; transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
         .hex-float { width: 100%; height: 100%; animation: floatAni 4s ease-in-out infinite; filter: drop-shadow(0 0 10px rgba(0,0,0,0.8)); transition: 0.3s; }
@@ -67,74 +79,27 @@
             position: relative; width: 100%; height: 100%; 
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); 
             display: flex; align-items: center; justify-content: center; 
-            transition: 0.5s;
-            background: var(--this-color-low); 
-            padding: 3px; 
-            box-shadow: 0 0 20px var(--this-color-low);
+            transition: 0.5s; background: var(--this-color-low); padding: 3px; box-shadow: 0 0 20px var(--this-color-low);
         }
-
         .hex-shape::before {
-            content: ''; position: absolute; inset: 3px;
-            background: radial-gradient(circle at 50% 0%, #989899 0%, #9cbbe4 80%);
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            z-index: 0;
-            box-shadow: inset 0 -10px 20px rgba(0,0,0,0.8), inset 0 2px 10px rgba(255,255,255,0.1);
-            transition: 0.5s;
+            content: ''; position: absolute; inset: 3px; background: radial-gradient(circle at 50% 0%, #989899 0%, #9cbbe4 80%);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); z-index: 0; box-shadow: inset 0 -10px 20px rgba(0,0,0,0.8), inset 0 2px 10px rgba(255,255,255,0.1); transition: 0.5s;
         }
-
         .hex-shape::after {
-            content: ''; position: absolute; inset: 8px;
-            background: transparent;
-            border: 1px solid var(--this-color-line);
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            z-index: 1;
-            opacity: 0.5;
-            transition: 0.5s;
+            content: ''; position: absolute; inset: 8px; background: transparent; border: 1px solid var(--this-color-line);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); z-index: 1; opacity: 0.5; transition: 0.5s;
         }
-
         .hex-label { 
-            position: relative; 
-            z-index: 2; 
-            font-size: 1.2rem;
-            font-weight: 800;
-            letter-spacing: 1px; 
-            color: #0f0e0e; 
-            text-transform: uppercase; 
-            text-align: center; 
-            pointer-events: none; 
-            text-shadow: 0 3px 8px rgb(246, 247, 255), 0 0 10px rgba(255,255,255,0.4);
-            transition: 0.4s;
-            line-height: 1.2;
+            position: relative; z-index: 2; font-size: 1.2rem; font-weight: 800; letter-spacing: 1px; color: #0f0e0e; text-transform: uppercase; text-align: center; pointer-events: none; text-shadow: 0 3px 8px rgb(246, 247, 255), 0 0 10px rgba(255,255,255,0.4); transition: 0.4s; line-height: 1.2;
         }
         
-        /* 1. จุดที่แก้: รวม Hover และ Active ให้เหมือนกันเป๊ะ เพื่อความโดดเด่น */
         .hex-box:hover, .hex-box.active { z-index: 10; }
-        
-        .hex-box:hover .hex-shape, 
-        .hex-box.active .hex-shape { 
-            background: var(--this-color); 
-            transform: scale(1.08); 
-        }
-        
-        .hex-box:hover .hex-float, 
-        .hex-box.active .hex-float { filter: drop-shadow(0 0 20px var(--this-color)); }
-        
-        .hex-box:hover .hex-shape::before, 
-        .hex-box.active .hex-shape::before { background: radial-gradient(circle at 50% 0%, #2a415e 0%, #0b121c 80%); }
-        
-        .hex-box:hover .hex-shape::after, 
-        .hex-box.active .hex-shape::after { opacity: 1; inset: 6px; border-color: var(--this-color); box-shadow: inset 0 0 15px var(--this-color-low); }
-        
-        .hex-box:hover .hex-label, 
-        .hex-box.active .hex-label { 
-            color: #FFFFFF; 
-            font-weight: 800; 
-            letter-spacing: 2px; 
-            text-shadow: 0 0 10px var(--this-color), 0 0 20px var(--this-color), 0 2px 5px rgba(0,0,0,1); 
-            transform: scale(1.1); 
-        }
+        .hex-box:hover .hex-shape, .hex-box.active .hex-shape { background: var(--this-color); transform: scale(1.08); }
+        .hex-box:hover .hex-float, .hex-box.active .hex-float { filter: drop-shadow(0 0 20px var(--this-color)); }
+        .hex-box:hover .hex-shape::before, .hex-box.active .hex-shape::before { background: radial-gradient(circle at 50% 0%, #2a415e 0%, #0b121c 80%); }
+        .hex-box:hover .hex-shape::after, .hex-box.active .hex-shape::after { opacity: 1; inset: 6px; border-color: var(--this-color); box-shadow: inset 0 0 15px var(--this-color-low); }
+        .hex-box:hover .hex-label, .hex-box.active .hex-label { color: #FFFFFF; font-weight: 800; letter-spacing: 2px; text-shadow: 0 0 10px var(--this-color), 0 0 20px var(--this-color), 0 2px 5px rgba(0,0,0,1); transform: scale(1.1); }
 
-        /* Setup distinct colors */
         .hex-box.p-core { --this-color: var(--color-core); --this-color-low: rgba(255, 215, 0, 0.25); --this-color-line: rgba(255, 215, 0, 0.4); }
         .hex-box.p1 { transform: translate(0, -165px); --this-color: var(--color-icu); --this-color-low: rgba(255, 62, 62, 0.25); --this-color-line: rgba(255, 62, 62, 0.4); }
         .hex-box.p2 { transform: translate(143px, -82px); --this-color: var(--color-or); --this-color-low: rgba(0, 255, 136, 0.25); --this-color-line: rgba(0, 255, 136, 0.4); }
@@ -162,211 +127,201 @@
         .active-desc { color: #a4b5cc; line-height: 1.8; margin-bottom: 40px; font-size: 1.05rem; font-weight: 300; }
         .active-btn { border: 1px solid transparent; background: transparent; padding: 14px 35px; font-weight: 800; cursor: pointer; color: #000; transition: 0.3s; border-radius: 4px; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; }
         .active-btn:hover { transform: translateY(-3px); box-shadow: 0 0 20px rgba(255,255,255,0.4); }
-        
-        @keyframes pulseSignal { 0% { opacity: 0.3; transform: scale(0.95); } 50% { opacity: 1; transform: scale(1.05); } 100% { opacity: 0.3; transform: scale(0.95); } }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
         /* ========================================================= */
-        /* PROFESSIONAL HEALTHCARE CONTENT SECTIONS */
+        /* PREMIUM CONTENT SECTIONS (ปรับแต่งใหม่ให้ Neat & Clean ไม่ซ้อนรก) */
         /* ========================================================= */
-        .reveal { opacity: 0; transform: translateY(60px); transition: 1.2s cubic-bezier(0.15, 0.85, 0.35, 1); will-change: transform, opacity; }
+        .reveal { opacity: 0; transform: translateY(50px); transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1); will-change: transform, opacity; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        .premium-section { padding: 160px 6%; background: #ffffff; color: #1a2a3d; position: relative; overflow: hidden; border-bottom: 1px solid rgba(0, 92, 185, 0.05); }
-        .premium-section.bg-light-alt { background: linear-gradient(180deg, #f4f7fb 0%, #ffffff 100%); }
-        .premium-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(rgba(0, 92, 185, 0.05) 1px, transparent 1px); background-size: 30px 30px; pointer-events: none; z-index: 0; }
+        /* รูปแบบมาตรฐานสำหรับ 1 / 3 / 5 (ธีมสว่าง คลีน) */
+        .premium-section { padding: 120px 8%; background: #ffffff; color: #111827; position: relative; }
+        
+        /* จุดปรับปรุงหลัก: รูปแบบสำหรับ 2 / 4 (เปลี่ยนเป็นธีมมืดเข้ม ป้องกันการกลืนกัน) */
+        .premium-section.dark-theme { background: #5a6170; color: #f3f4f6; border-top: 1px solid rgba(0, 229, 255, 0.05); border-bottom: 1px solid rgba(0, 229, 255, 0.05); }
 
-        .section-layout { display: flex; align-items: center; justify-content: center; max-width: 1300px; margin: 0 auto; position: relative; gap: 50px; z-index: 2; }
+        /* ยกเลิกการลอยทับกันแบบเก่า เปลี่ยนเป็น Grid 50/50 ที่สมมาตรและเรียบหรูระดับสากล */
+        .section-layout { display: flex; align-items: center; justify-content: space-between; max-width: 1400px; margin: 0 auto; gap: 80px; }
         .section-layout.reverse { flex-direction: row-reverse; }
 
-        .premium-img-box { flex: 0 0 50%; position: relative; border-radius: 16px; overflow: hidden; box-shadow: 0 25px 60px -15px rgba(13, 22, 35, 0.2); border: 1px solid rgba(0,0,0,0.04); }
-        .premium-img-box img { width: 100%; height: auto; display: block; transition: transform 2s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .premium-img-box:hover img { transform: scale(1.03); }
-        .img-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0, 92, 185, 0.1), transparent); mix-blend-mode: multiply; pointer-events: none; z-index: 5;}
+        .premium-img-box { flex: 0 0 50%; position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        .dark-theme .premium-img-box { box-shadow: 0 25px 50px rgba(0,0,0,0.4); }
+        .premium-img-box img { width: 100%; height: auto; display: block; transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .premium-img-box:hover img { transform: scale(1.04); }
+        .img-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0, 92, 185, 0.05), transparent); pointer-events: none; }
 
-        .premium-text-box { flex: 1; z-index: 10; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(0, 92, 185, 0.08); padding: 70px 50px; border-radius: 20px; box-shadow: 0 30px 60px -20px rgba(13, 22, 35, 0.1); position: relative; }
-        .section-layout .premium-text-box { margin-left: -6%; }
-        .section-layout.reverse .premium-text-box { margin-left: 0; margin-right: -6%; }
+        .premium-text-box { flex: 0 0 45%; position: relative; padding: 20px 0; }
+        
+        /* เส้นสายนำสายตาแบบเรียบหรูที่ข้างหัวข้อ */
+        .premium-tag { color: var(--ge-blue); font-weight: 800; letter-spacing: 4px; font-size: 0.8rem; display: block; margin-bottom: 15px; text-transform: uppercase; }
+        .dark-theme .premium-tag { color: var(--primary); text-shadow: 0 0 10px rgba(0, 229, 255, 0.3); }
+        
+        .premium-title { font-size: 2.8rem; font-weight: 800; margin-bottom: 25px; line-height: 1.15; letter-spacing: -1px; color: inherit; }
+        .premium-desc { color: #4b5563; line-height: 1.8; margin-bottom: 35px; font-size: 1.05rem; font-weight: 400; }
+        .dark-theme .premium-desc { color: #9ca3af; }
 
-        .watermark { position: absolute; top: -15px; right: 25px; font-size: 140px; font-weight: 800; color: rgba(0, 92, 185, 0.03); line-height: 1; user-select: none; z-index: -1; letter-spacing: -4px; }
-        .section-layout.reverse .watermark { right: auto; left: 25px; }
+        .premium-features { list-style: none; margin-bottom: 40px; }
+        .premium-features li { display: flex; align-items: flex-start; margin-bottom: 15px; font-size: 1rem; font-weight: 600; color: inherit; }
+        .premium-features li span { color: var(--ge-blue); margin-right: 12px; font-size: 1.1rem; }
+        .dark-theme .premium-features li span { color: var(--primary); }
 
-        .premium-tag { color: var(--ge-blue); font-weight: 800; letter-spacing: 4px; font-size: 0.8rem; display: block; margin-bottom: 20px; text-transform: uppercase; }
-        .premium-title { font-size: 2.8rem; font-weight: 800; margin-bottom: 25px; line-height: 1.1; letter-spacing: -1px; color: #0d1520; }
-        .premium-desc { color: #4a5568; line-height: 1.8; margin-bottom: 40px; font-size: 1.1rem; }
+        .btn-premium-link { background: transparent; border: none; color: var(--ge-blue); font-size: 0.9rem; font-weight: 800; letter-spacing: 1px; cursor: pointer; display: inline-flex; align-items: center; text-transform: uppercase; padding-bottom: 4px; border-bottom: 2px solid transparent; transition: 0.3s; text-decoration: none; }
+        .dark-theme .btn-premium-link { color: var(--primary); }
+        .btn-premium-link .arrow { margin-left: 8px; transition: 0.3s; }
+        .btn-premium-link:hover { letter-spacing: 2px; border-bottom-color: currentColor; }
+        .btn-premium-link:hover .arrow { transform: translateX(5px); }
 
-        .premium-features { list-style: none; margin-bottom: 50px; }
-        .premium-features li { display: flex; align-items: flex-start; margin-bottom: 18px; font-size: 1.05rem; font-weight: 600; color: #2d3748; line-height: 1.4; }
-        .premium-features li span { color: var(--primary); margin-right: 15px; font-size: 1.2rem; transform: translateY(-2px); }
-
-        .btn-premium-link { background: transparent; border: none; color: var(--ge-blue); font-size: 0.95rem; font-weight: 800; letter-spacing: 1px; cursor: pointer; display: inline-flex; align-items: center; text-transform: uppercase; padding-bottom: 5px; border-bottom: 2px solid transparent; transition: 0.3s ease; text-decoration: none; }
-        .btn-premium-link .arrow { margin-left: 10px; transition: 0.3s ease; font-size: 1.2rem; }
-        .btn-premium-link:hover { border-bottom-color: var(--ge-blue); letter-spacing: 2px; }
-        .btn-premium-link:hover .arrow { transform: translateX(8px); }
-
-        /* --- SECTION 5 AUTOMATIC & MANUAL CAROUSEL --- */
-        .idh-carousel { position: relative; width: 100%; height: 460px; overflow: hidden; background: #f8fafc; border-radius: 16px; }
+        /* --- Section 5 Slider --- */
+        .idh-carousel { position: relative; width: 100%; height: 440px; overflow: hidden; border-radius: 12px; background: #000; }
         .idh-slides-wrapper { width: 100%; height: 100%; position: relative; }
-        .idh-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; display: flex; align-items: center; justify-content: center; z-index: 1; }
+        .idh-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s ease-in-out; display: flex; align-items: center; justify-content: center; }
         .idh-slide.active { opacity: 1; z-index: 2; }
-        .idh-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .idh-slide img { width: 100%; height: 100%; object-fit: cover; }
         
-        .carousel-indicators { position: absolute; bottom: 25px; left: 40px; display: flex; gap: 8px; z-index: 15; background: rgba(255,255,255,0.8); padding: 10px 18px; border-radius: 30px; backdrop-filter: blur(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .indicator-dot { width: 8px; height: 8px; background: rgba(13, 22, 35, 0.2); border-radius: 50%; transition: all 0.3s ease; cursor: pointer; }
-        .indicator-dot:hover { background: rgba(0, 92, 185, 0.5); }
-        .indicator-dot.active { background: var(--ge-blue); width: 24px; border-radius: 4px; }
+        .carousel-indicators { position: absolute; bottom: 20px; left: 30px; display: flex; gap: 8px; z-index: 15; background: rgba(255,255,255,0.8); padding: 8px 14px; border-radius: 30px; backdrop-filter: blur(5px); }
+        .indicator-dot { width: 7px; height: 7px; background: rgba(13, 22, 35, 0.2); border-radius: 50%; transition: 0.3s; cursor: pointer; }
+        .indicator-dot.active { background: var(--ge-blue); width: 20px; border-radius: 4px; }
 
-        /* 2. จุดที่แก้: เพิ่มลูกศรเลื่อนซ้ายขวา สไตล์หรูหรา (Apple Style) */
-        .idh-nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(12px); /* กระจกฝ้า */
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
-            color: #1a2a3d;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 20;
-            opacity: 0; /* ซ่อนไว้เมื่อไม่ชี้เมาส์ */
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-        
-        .idh-nav-prev { left: 20px; }
-        .idh-nav-next { right: 20px; }
-        
-        /* แสดงปุ่มเมื่อเอาเมาส์ชี้ไปที่กล่องรูป */
+        .idh-nav-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 50%; color: #111827; font-size: 1rem; cursor: pointer; z-index: 20; opacity: 0; transition: 0.3s; }
+        .idh-nav-prev { left: 15px; } .idh-nav-next { right: 15px; }
         .idh-carousel:hover .idh-nav-btn { opacity: 1; }
-        
-        /* Effect ตอนเอาเมาส์ชี้ปุ่ม */
-        .idh-nav-btn:hover {
-            background: rgba(255, 255, 255, 0.9);
-            transform: translateY(-50%) scale(1.08);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
+        .idh-nav-btn:hover { background: rgba(255, 255, 255, 0.9); transform: translateY(-50%) scale(1.05); }
 
-        /* Footer */
-        footer { padding: 50px 5%; background: #05080d; text-align: center; color: rgba(255,255,255,0.3); font-size: 0.85rem; border-top: 1px solid rgba(0, 229, 255, 0.1); letter-spacing: 2px; }
+        footer { padding: 40px 5%; background: #05080d; text-align: center; color: rgba(255,255,255,0.3); font-size: 0.8rem; border-top: 1px solid rgba(0, 229, 255, 0.1); letter-spacing: 2px; }
         footer strong { color: rgba(255,255,255,0.7); }
 
         /* ========================================================= */
-        /* 3. จุดที่แก้: Responsive ปรับปรุงให้หรูหราบนมือถือ (High-End Feel) */
+        /* RESPONSIVE UPGRADE (แก้ปัญหาจอล้น บังคับฟิตใน 1 หน้าสกรีนเวลาเลื่อน) */
         /* ========================================================= */
         @media (max-width: 1024px) {
-            .split-layout { gap: 40px; }
-            .premium-img-box { flex: 0 0 50%; }
-            .premium-text-box { padding: 50px 40px; }
-            .premium-title { font-size: 2.4rem; }
+            .section-layout { gap: 40px; }
+            .premium-title { font-size: 2.2rem; }
         }
         
         @media (max-width: 768px) { 
-            /* เพิ่มความโปร่งให้ Hero Section */
-            .hero-container { padding-top: 130px; padding-bottom: 60px; }
-            .hero-header p { font-size: 2.4rem; margin-top: 15px; } 
-            .split-layout { flex-direction: column-reverse; gap: 50px; }
+            /* --- Responsive Header --- */
+            header { padding: 1rem 5%; }
+            .nav-links { display: none; } /* ซ่อนเมนูที่ไม่จำเป็นบนมือถือเพื่อประหยัดพื้นที่ */
+
+            /* --- Responsive Hero & Hexagon (ดึงขึ้นมาอยู่หน้าเดียวกัน ไม่ต้องสกรอลล์หา) --- */
+            .hero-container { padding-top: 100px; padding-bottom: 20px; min-height: auto; }
+            .hero-header { margin-bottom: 30px; }
+            .hero-header p { font-size: 1.8rem; } 
+            .split-layout { flex-direction: column; gap: 20px; margin-top:70px;}
             
-            /* ปรับ Hexagon ให้สมดุล */
-            .hex-stage { width: 340px; height: 340px; transform: scale(0.8); margin-bottom: -30px; }
-            .info-side { width: 100%; padding: 40px 30px; border-radius: 16px; }
+            /* บีบสเกลแผงรังผึ้งลงเพื่อประหยัดพื้นที่แนวตั้ง */
+            .hex-stage { width: 320px; height: 320px; transform: scale(0.72); margin: -40px 0; }
             
-            /* ปรับโครงสร้าง Premium Section ไม่ให้ดูอึดอัด */
-            .premium-section { padding: 80px 6%; }
-            .section-layout, .section-layout.reverse { flex-direction: column; gap: 0; }
+            /* ย้ายกล่องข้อมูลขึ้นมาประกบติดทันที ไม่ต้องเลื่อนจอ */
+            .info-side { width: 100%;  min-height: 220px; padding: 25px; transform: translateY(0); margin-top: 0; }
+            .active-title { font-size: 1.8rem; margin-bottom: 10px; }
+            .active-desc { font-size: 0.95rem; margin-bottom: 20px; line-height: 1.6; }
+
+            /* --- Responsive Section 1-5 (จำกัดความสูงให้จบสวยใน 1 หน้าจอ ไม่ล้น) --- */
+            .premium-section { padding: 40px 6%; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+            .section-layout, .section-layout.reverse { flex-direction: column; gap: 20px; width: 100%; text-align: center; }
             
-            /* ปรับกล่องภาพให้มุมมนเนียนๆ */
-            .premium-img-box, .premium-text-box { flex: 0 0 100%; width: 100%; margin: 0 !important; }
-            .premium-img-box { border-radius: 20px 20px 0 0; }
+            /* ควบคุมขนาดกล่องรูปไม่ให้กินพื้นที่จอ */
+            .premium-img-box { flex: 0 0 auto; width: 100%; max-height: 35vh; }
+            .idh-carousel { height: 240px; }
             
-            /* เลื่อนกล่องข้อความมาซ้อนกันนิดๆ เพื่อความมีมิติ (Depth) */
-            .premium-text-box { 
-                margin-top: -30px !important; 
-                border-radius: 20px; 
-                padding: 45px 30px; 
-                box-shadow: 0 -15px 40px rgba(13, 22, 35, 0.06); /* เงาบางๆ ดูแพง */
-                border: 1px solid rgba(255,255,255,1);
-            }
-            .premium-title { font-size: 2.2rem; }
+            /* จัดระเบียบกล่องข้อความให้กระชับที่สุด */
+            .premium-text-box { flex: 0 0 auto; width: 100%; padding: 0; }
+            .premium-title { font-size: 1.8rem; margin-bottom: 12px; }
+            .premium-desc { font-size: 0.95rem; margin-bottom: 20px; line-height: 1.6; }
             
-            /* Carousel มือถือ */
-            .idh-carousel { height: 320px; }
-            .carousel-indicators { left: 50%; transform: translateX(-50%); bottom: 20px; padding: 8px 15px; }
-            
-            /* ปุ่มลูกศรมือถือ ให้แสดงค้างไว้แบบจางๆ เพื่อให้รู้ว่าปัด/กดได้ */
-            .idh-nav-btn { opacity: 0.8; width: 40px; height: 40px; font-size: 1rem; }
-            .idh-nav-prev { left: 10px; }
-            .idh-nav-next { right: 10px; }
+            .premium-features { display: inline-block; text-align: left; margin-bottom: 20px; }
+            .premium-features li { margin-bottom: 8px; font-size: 0.9rem; }
+
+            .carousel-indicators { left: 50%; transform: translateX(-50%); bottom: 15px; padding: 6px 12px; }
+            .idh-nav-btn { opacity: 0.7; width: 36px; height: 36px; }
         }
     </style>
 </head>
-<body>
+<!-- เริ่มต้นด้วยภาษาอังกฤษ (lang-en) เป็นค่าเริ่มต้น -->
+<body class="lang-en">
 
+    <!-- Cyber Background Elements -->
     <div class="bg-container">
         <div class="bg-grid"></div>
         <div class="bg-scanline"></div>
     </div>
 
+    <!-- Header & Language Switcher -->
     <header>
         <div class="logo">AIXE<span>LINK</span></div>
-        <nav class="nav-links">
-            <a href="#">SOLUTIONS</a>
-            <a href="#">TECH</a>
+        <div class="nav-controls">
+            <nav class="nav-links">
+                <a href="#">SOLUTIONS</a>
+                <a href="#">TECH</a>
+            </nav>
+            <!-- ส่วนปุ่มสลับภาษา: กดแล้วจะเรียกฟังก์ชันเปลี่ยน Class ที่ตัว body -->
+            <div class="lang-switcher">
+                <span class="lang-btn active" id="btn-en" onclick="changeLanguage('en')">EN</span>
+                <span>|</span>
+                <span class="lang-btn" id="btn-th" onclick="changeLanguage('th')">TH</span>
+            </div>
             <a href="#" class="btn-demo">ENQUIRE</a>
-        </nav>
+        </div>
     </header>
 
     <main>
+        <!-- Hero Section (Hexagon Matrix Component) -->
         <section class="hero-container">
             <div class="hero-header">
                 <h2>BEYOND CONNECTIVITY</h2>
-                <p>The Intelligence Layer for<br><strong>High-Performance Care</strong></p>
+                <!-- รองรับสองภาษาในจุดหลักด้วยคลาส .en และ .th -->
+                <p class="en">The Intelligence Layer for<br><strong>High-Performance Care</strong></p>
+                <p class="th">ชั้นเลเยอร์อัจฉริยะเพื่อ<br><strong>การดูแลรักษาประสิทธิภาพสูง</strong></p>
             </div>
 
             <div class="split-layout">
+                <!-- รังผึ้งส่งข้อมูลแบบ 2 ภาษาเข้าไปในฟังก์ชันเมื่อทำการคลิก -->
                 <div class="hex-stage">
-                    <div class="hex-box p-core" onclick="selectHex(this, 'AI CORE', 'Unified neural engine processing 1.2M clinical data points per second with absolute fidelity.', 'var(--color-core)')">
+                    <div class="hex-box p-core" onclick="selectHex(this, 'AI CORE', 'ศูนย์กลาง AI', 'Unified neural engine processing 1.2M clinical data points per second with absolute fidelity.', 'ระบบประมวลผลอัจฉริยะร่วมวิเคราะห์ข้อมูลคลินิกกว่า 1.2 ล้านจุดต่อวินาทีอย่างแม่นยำสูงสุด', 'var(--color-core)')">
                         <div class="hex-float"><div class="hex-shape"><div class="hex-label">Core</div></div></div>
                     </div>
-                    <div class="hex-box p1" onclick="selectHex(this, 'icuCare', 'Proactive monitoring ecosystem designed for high-acuity environments.', 'var(--color-icu)')">
+                    <div class="hex-box p1" onclick="selectHex(this, 'icuCare', 'ระบบ icuCare', 'Proactive monitoring ecosystem designed for high-acuity environments.', 'ระบบเฝ้าระวังเชิงรุกที่ออกแบบมาเพื่อสภาวะผู้ป่วยวิกฤตโดยเฉพาะ', 'var(--color-icu)')">
                         <div class="hex-float"><div class="hex-shape"><div class="hex-label">icuCare</div></div></div>
                     </div>
-                    <div class="hex-box p2" onclick="selectHex(this, 'orCare', 'Surgical workflow orchestration with millisecond latency synchronization.', 'var(--color-or)')">
+                    <div class="hex-box p2" onclick="selectHex(this, 'orCare', 'ระบบ orCare', 'Surgical workflow orchestration with millisecond latency synchronization.', 'การจัดลำดับขั้นตอนในห้องศัลยกรรมอย่างแม่นยำด้วยการซิงค์ข้อมูลระดับมิลลิวินาที', 'var(--color-or)')">
                         <div class="hex-float"><div class="hex-shape"><div class="hex-label">orCare</div></div></div>
                     </div>
-                    <div class="hex-box p3" onclick="selectHex(this, 'MedFlow', 'Closed-loop medication management with zero-error validation.', 'var(--color-meds)')">
+                    <div class="hex-box p3" onclick="selectHex(this, 'MedFlow', 'ระบบ MedFlow', 'Closed-loop medication management with zero-error validation.', 'การจัดการระบบยาแบบวงปิดพร้อมการตรวจสอบที่การันตีความผิดพลาดเป็นศูนย์', 'var(--color-meds)')">
                         <div class="hex-float"><div class="hex-shape"><div class="hex-label">MedFlow</div></div></div>
                     </div>
-                    <div class="hex-box p4" onclick="selectHex(this, 'Custom AI', 'Deep learning models tailored to your hospital’s unique patient demographics.', 'var(--color-custom)')">
+                    <div class="hex-box p4" onclick="selectHex(this, 'Custom AI', 'เอไอเฉพาะทาง', 'Deep learning models tailored to your hospital’s unique patient demographics.', 'โมเดลการเรียนรู้เชิงลึกที่ปรับแต่งให้เข้ากับข้อมูลประชากรผู้ป่วยเฉพาะของโรงพยาบาลคุณ', 'var(--color-custom)')">
                         <div class="hex-float"><div class="hex-shape"><div class="hex-label">Custom</div></div></div>
                     </div>
-                    <div class="hex-box p5" onclick="selectHex(this, 'TraumaLink', 'Emergency department synchronization for rapid-response trauma care.', 'var(--color-trauma)')">
+                    <div class="hex-box p5" onclick="selectHex(this, 'TraumaLink', 'ระบบ TraumaLink', 'Emergency department synchronization for rapid-response trauma care.', 'การเชื่อมโยงข้อมูลแผนกฉุกเฉินเพื่อส่งต่อและดูแลผู้ป่วยอุบัติเหตุอย่างรวดเร็ว', 'var(--color-trauma)')">
                         <div class="hex-float"><div class="hex-shape"><div class="hex-label">Trauma</div></div></div>
                     </div>
                 </div>
 
+                <!-- Info Panel ข้างรังผึ้ง -->
                 <div class="info-side" id="infoPanel">
                     <div id="idleUI" class="text-center">
                         <div class="pulse-icon">⎔</div>
-                        <p class="status-standby">SYSTEM IDLE</p>
-                        <p class="status-hint">Establish connection via module selection</p>
+                        <p class="status-standby en">SYSTEM IDLE</p>
+                        <p class="status-standby th">ระบบพร้อมทำงาน</p>
+                        <p class="status-hint en">Establish connection via module selection</p>
+                        <p class="status-hint th">โปรดเลือกโมดูลเพื่อเริ่มการเชื่อมต่อข้อมูล</p>
                     </div>
                     <div id="activeUI" style="display: none; animation: fadeIn 0.8s ease;">
-                        <span id="activeTag" class="active-tag">SYSTEM STATUS: OPTIMIZED</span>
+                        <span id="activeTag" class="active-tag en">SYSTEM STATUS: OPTIMIZED</span>
+                        <span id="activeTagTh" class="active-tag th">สถานะระบบ: มีประสิทธิภาพสูงสุด</span>
                         <h1 id="d-title" class="active-title">Title</h1>
                         <p id="d-desc" class="active-desc">Description</p>
-                        <button id="d-btn" class="active-btn">EXPLORE MODULE</button>
+                        <button id="d-btn" class="active-btn">
+                            <span class="en">EXPLORE MODULE</span>
+                            <span class="th">สำรวจโมดูลนี้</span>
+                        </button>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- SECTION 1: Hub (ธีมขาว คลีน) -->
         <section class="premium-section reveal">
             <div class="section-layout">
                 <div class="premium-img-box">
@@ -374,31 +329,49 @@
                     <div class="img-overlay"></div>
                 </div>
                 <div class="premium-text-box">
-                    <div class="watermark">01</div>
-                    <span class="premium-tag">INFRASTRUCTURE</span>
-                    <h2 class="premium-title">The <strong>IDH Core</strong> Hub</h2>
-                    <p class="premium-desc">Standardizing diverse medical data streams with enterprise-grade security. A foundation built for seamless clinical interoperability and future-proof scaling.</p>
-                    <button class="btn-premium-link">VIEW ARCHITECTURE <span class="arrow">→</span></button>
+                    <span class="premium-tag en">INFRASTRUCTURE</span>
+                    <span class="premium-tag th">โครงสร้างพื้นฐาน</span>
+                    
+                    <h2 class="premium-title en">The <strong>IDH Core</strong> Hub</h2>
+                    <h2 class="premium-title th">ศูนย์กลาง <strong>IDH Core</strong></h2>
+                    
+                    <p class="premium-desc en">Standardizing diverse medical data streams with enterprise-grade security. A foundation built for seamless clinical interoperability and future-proof scaling.</p>
+                    <p class="premium-desc th">แปลงกระแสข้อมูลทางการแพทย์ที่หลากหลายให้เป็นมาตรฐานเดียวกันด้วยความปลอดภัยระดับองค์กร พื้นฐานที่สร้างขึ้นเพื่อการทำงานร่วมกันทางคลินิกอย่างไร้รอยต่อ</p>
+                    
+                    <button class="btn-premium-link">
+                        <span class="en">VIEW ARCHITECTURE <span class="arrow">→</span></span>
+                        <span class="th">ดูสถาปัตยกรรมระบบ <span class="arrow">→</span></span>
+                    </button>
                 </div>
             </div>
         </section>
 
-        <section class="premium-section bg-light-alt reveal">
+        <!-- SECTION 2: Sharding (ธีมมืดเข้ม - แก้ไขเรื่องการกลืนกันของสีพื้นหลังเรียบร้อย) -->
+        <section class="premium-section dark-theme reveal">
             <div class="section-layout reverse">
                 <div class="premium-img-box">
                     <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200" alt="Cyber Security">
                     <div class="img-overlay"></div>
                 </div>
                 <div class="premium-text-box">
-                    <div class="watermark">02</div>
-                    <span class="premium-tag">SECURITY</span>
-                    <h2 class="premium-title">Neural <strong>Sharding</strong></h2>
-                    <p class="premium-desc">Security that exceeds global standards. Our proprietary sharding protocol ensures clinical records are fragmented and distributed, rendering breaches obsolete.</p>
-                    <button class="btn-premium-link">SECURITY PROTOCOLS <span class="arrow">→</span></button>
+                    <span class="premium-tag en">SECURITY</span>
+                    <span class="premium-tag th">ความปลอดภัยระดับสูง</span>
+                    
+                    <h2 class="premium-title en">Neural <strong>Sharding</strong></h2>
+                    <h2 class="premium-title th">การย่อยข้อมูลศลัยวิทยา <strong>Neural Sharding</strong></h2>
+                    
+                    <p class="premium-desc en">Security that exceeds global standards. Our proprietary sharding protocol ensures clinical records are fragmented and distributed, rendering data breaches obsolete.</p>
+                    <p class="premium-desc th">ความปลอดภัยที่เหนือกว่ามาตรฐานสากล โปรโตคอลการกระจายไฟล์ที่เป็นเอกสิทธิ์ของเราช่วยให้มั่นใจได้ว่าบันทึกการรักษาจะถูกเข้ารหัสแยกส่วน ทำให้การโจรกรรมข้อมูลเป็นไปไม่ได้</p>
+                    
+                    <button class="btn-premium-link">
+                        <span class="en">SECURITY PROTOCOLS <span class="arrow">→</span></span>
+                        <span class="th">ข้อกำหนดความปลอดภัย <span class="arrow">→</span></span>
+                    </button>
                 </div>
             </div>
         </section>
 
+        <!-- SECTION 3: Vitalis (ธีมขาว คลีน) -->
         <section class="premium-section reveal">
             <div class="section-layout">
                 <div class="premium-img-box">
@@ -406,35 +379,53 @@
                     <div class="img-overlay"></div>
                 </div>
                 <div class="premium-text-box">
-                    <div class="watermark">03</div>
-                    <span class="premium-tag">PRECISION AI</span>
-                    <h2 class="premium-title">Predictive <strong>Vitalis</strong></h2>
-                    <p class="premium-desc">Deep learning algorithms that anticipate patient deterioration hours before clinical triggers. Move from reactive treatment to proactive care.</p>
-                    <button class="btn-premium-link">CLINICAL IMPACT <span class="arrow">→</span></button>
+                    <span class="premium-tag en">PRECISION AI</span>
+                    <span class="premium-tag th">ปัญญาประดิษฐ์ความแม่นยำสูง</span>
+                    
+                    <h2 class="premium-title en">Predictive <strong>Vitalis</strong></h2>
+                    <h2 class="premium-title th">ระบบพยากรณ์โรค <strong>Predictive Vitalis</strong></h2>
+                    
+                    <p class="premium-desc en">Deep learning algorithms that anticipate patient deterioration hours before clinical triggers. Move from reactive treatment to proactive care.</p>
+                    <p class="premium-desc th">อัลกอริทึมการเรียนรู้เชิงลึกที่คาดการณ์การทรุดตัวของผู้ป่วยได้ล่วงหน้าหลายชั่วโมงก่อนเกิดอาการวิกฤต เปลี่ยนผ่านจากการรักษาตามอาการสู่การพยากรณ์และป้องกันเชิงรุก</p>
+                    
+                    <button class="btn-premium-link">
+                        <span class="en">CLINICAL IMPACT <span class="arrow">→</span></span>
+                        <span class="th">ผลลัพธ์ทางคลินิก <span class="arrow">→</span></span>
+                    </button>
                 </div>
             </div>
         </section>
 
-        <section class="premium-section bg-light-alt reveal">
+        <!-- SECTION 4: Workflow (ธีมมืดเข้ม - แบ่งแยกชั้นข้อมูลชัดเจน) -->
+        <section class="premium-section dark-theme reveal">
             <div class="section-layout reverse">
                 <div class="premium-img-box">
                     <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200" alt="Smart Workflow">
                     <div class="img-overlay"></div>
                 </div>
                 <div class="premium-text-box">
-                    <div class="watermark">04</div>
-                    <span class="premium-tag">ORCHESTRATION</span>
-                    <h2 class="premium-title">Smart <strong>Workflow</strong></h2>
-                    <p class="premium-desc">Eliminating operational friction with real-time resource allocation. We optimize hospital throughput, ensuring every second is spent on what matters: the patient.</p>
-                    <button class="btn-premium-link">EFFICIENCY METRICS <span class="arrow">→</span></button>
+                    <span class="premium-tag en">ORCHESTRATION</span>
+                    <span class="premium-tag th">การจัดลำดับกระบวนการ</span>
+                    
+                    <h2 class="premium-title en">Smart <strong>Workflow</strong></h2>
+                    <h2 class="premium-title th">ระบบจัดการงานอัจฉริยะ <strong>Smart Workflow</strong></h2>
+                    
+                    <p class="premium-desc en">Eliminating operational friction with real-time resource allocation. We optimize hospital throughput, ensuring every second is spent on what matters: the patient.</p>
+                    <p class="premium-desc th">ลดความซับซ้อนในการปฏิบัติงานด้วยการจัดสรรทรัพยากรแบบเรียลไทม์ เพิ่มขีดความสามารถในการรองรับผู้ป่วย เพื่อให้มั่นใจว่าทุกวินาทีอันมีค่าถูกใช้ไปกับผู้ป่วยอย่างแท้จริง</p>
+                    
+                    <button class="btn-premium-link">
+                        <span class="en">EFFICIENCY METRICS <span class="arrow">→</span></span>
+                        <span class="th">ชี้วัดประสิทธิภาพ <span class="arrow">→</span></span>
+                    </button>
                 </div>
             </div>
         </section>
 
+        <!-- SECTION 5: IDH Hardware (ธีมขาว คลีน + สไลเดอร์ระดับ High-End) -->
         <section class="premium-section reveal">
             <div class="section-layout">
                 <div class="premium-img-box idh-carousel">
-                    <!-- ปุ่ม Navigation Manual (Apple Style) -->
+                    <!-- Manual Navigation -->
                     <div class="idh-nav-btn idh-nav-prev" onclick="manualChangeSlide(-1)">❮</div>
                     <div class="idh-nav-btn idh-nav-next" onclick="manualChangeSlide(1)">❯</div>
                     
@@ -451,23 +442,34 @@
                     </div>
                     <div class="img-overlay"></div>
                     <div class="carousel-indicators">
-                        <!-- ผูกฟังก์ชัน onclick ให้จุดเผื่อผู้ใช้ต้องการกดไปรูปใดๆ เลย -->
                         <span class="indicator-dot active" onclick="goToSlide(0)"></span>
                         <span class="indicator-dot" onclick="goToSlide(1)"></span>
                         <span class="indicator-dot" onclick="goToSlide(2)"></span>
                     </div>
                 </div>
                 <div class="premium-text-box">
-                    <div class="watermark">05</div>
-                    <span class="premium-tag">HARDWARE PLATFORM</span>
+                    <span class="premium-tag en">HARDWARE PLATFORM</span>
+                    <span class="premium-tag th">สถาปัตยกรรมฮาร์ดแวร์</span>
+                    
                     <h2 class="premium-title">IDH : <strong>intelligence device hub</strong></h2>
-                    <p class="premium-desc">การปฏิวัติทางสถาปัตยกรรมฮาร์ดแวร์ทางการแพทย์ขนาดกะทัดรัด (Ultra-compact form factor) หล่อขึ้นรูปด้วยอะลูมิเนียมอโนไดซ์ขัดเงาระดับพรีเมียม ขับเคลื่อนโมเดล AI แบบกระจายศูนย์ประมวลผล ณ จุดดูแลผู้ป่วยในทันทีโดยไม่ต้องพึ่งพาระบบคลาวด์ภายนอก</p>
+                    
+                    <p class="premium-desc en">An architectural revolution in medical hardware. An ultra-compact form factor milled from premium anodized aluminum, engineered to process decentralized Edge AI models locally at the point of care.</p>
+                    <p class="premium-desc th">การปฏิวัติทางสถาปัตยกรรมฮาร์ดแวร์ทางการแพทย์ขนาดกะทัดรัด (Ultra-compact) หล่อขึ้นรูปด้วยอลูมิเนียมอโนไดซ์ระดับพรีเมียม ขับเคลื่อนโมเดล AI แบบกระจายศูนย์เพื่อประมวลผล ณ จุดดูแลผู้ป่วยทันที</p>
+                    
                     <ul class="premium-features">
-                        <li><span>✦</span> Ultra-compact structural footprint (Inspired by Mac Mini core)</li>
-                        <li><span>✦</span> Edge AI Neuro-processing optimization array</li>
-                        <li><span>✦</span> Advanced continuous 3D-thermal dissipation technology</li>
+                        <li class="en"><span>✦</span> Ultra-compact structural footprint (Inspired by Mac Mini core)</li>
+                        <li class="th"><span>✦</span> โครงสร้างสถาปัตยกรรมขนาดกะทัดรัดเป็นพิเศษ (แรงบันดาลใจจาก Mac Mini)</li>
+                        
+                        <li class="en"><span>✦</span> Edge AI Neuro-processing optimization array</li>
+                        <li class="th"><span>✦</span> อาร์เรย์ประมวลผลโครงข่ายประสาทเทียมแบบ Edge AI ในตัว</li>
+                        
+                        <li class="en"><span>✦</span> Advanced continuous 3D-thermal dissipation technology</li>
+                        <li class="th"><span>✦</span> เทคโนโลยีระบายความร้อน 3 มิติประสิทธิภาพสูงแบบต่อเนื่อง</li>
                     </ul>
-                    <button class="btn-premium-link">EXPLORE IDH SPECIFICATIONS <span class="arrow">→</span></button>
+                    <button class="btn-premium-link">
+                        <span class="en">EXPLORE IDH SPECIFICATIONS <span class="arrow">→</span></span>
+                        <span class="th">สำรวจข้อมูลทางเทคนิคของ IDH <span class="arrow">→</span></span>
+                    </button>
                 </div>
             </div>
         </section>
@@ -478,10 +480,40 @@
     </footer>
 
     <script>
-        // ฟังก์ชันสำหรับจัดการการคลิกที่ Hexagon 
-        function selectHex(el, title, desc, color) {
+        // เครือข่ายตัวแปรกลางสำหรับเก็บสถานะภาษาปัจจุบัน (เริ่มต้นเป็นอังกฤษ)
+        let currentLang = 'en';
+        let activeHexData = null; // เก็บข้อมูล Hexagon ตัวล่าสุดที่ถูกคลิก
+
+        // ฟังก์ชันสลับภาษาหลัก
+        function changeLanguage(lang) {
+            currentLang = lang;
+            
+            // เปลี่ยน Active Class ที่ปุ่มสลับภาษา
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${lang}`).classList.add('active');
+            
+            // อัปเดตภาษาที่ตัว Body เพื่อให้ CSS จัดการซ่อน/แสดงผล
+            document.body.className = `lang-${lang}`;
+
+            // หากมีการเลือก Hexagon ค้างไว้ ให้ทำการรีเฟรชข้อความภาษาในกล่องข้อมูลด้วย
+            if (activeHexData) {
+                renderHexInfo();
+            }
+        }
+
+        // ฟังก์ชันรับข้อมูลเมื่อกดคลิกรังผึ้ง (ส่งทั้งคู่อังกฤษและไทยเข้ามาพร้อมกัน)
+        function selectHex(el, titleEn, titleTh, descEn, descTh, color) {
             document.querySelectorAll('.hex-box').forEach(h => h.classList.remove('active'));
             el.classList.add('active');
+
+            // บันทึกข้อมูลลง Object กลางเพื่อรองรับการสลับภาษาแบบเรียลไทม์
+            activeHexData = { titleEn, titleTh, descEn, descTh, color };
+            renderHexInfo();
+        }
+
+        // ฟังก์ชันวาดเนื้อหาลงกล่องข้อความ Hexagon ตามภาษาที่ใช้งานอยู่
+        function renderHexInfo() {
+            if (!activeHexData) return;
 
             const activeUI = document.getElementById('activeUI');
             const idleUI = document.getElementById('idleUI');
@@ -491,77 +523,72 @@
                 idleUI.style.display = 'none';
                 activeUI.style.display = 'block';
                 
+                // คัดกรองภาษาที่จะแสดงผล
+                const title = currentLang === 'en' ? activeHexData.titleEn : activeHexData.titleTh;
+                const desc = currentLang === 'en' ? activeHexData.descEn : activeHexData.descTh;
+                const color = activeHexData.color;
+
                 document.getElementById('d-title').innerHTML = title;
                 document.getElementById('d-desc').innerText = desc;
                 
+                // ตกแต่งเฉดสีของกล่องตามสถานะ Core/Care แบบไดนามิก
                 const infoPanel = document.getElementById('infoPanel');
                 infoPanel.style.borderTopColor = color; 
                 infoPanel.style.boxShadow = `0 0 40px ${color.replace(')', ', 0.15)').replace('rgb', 'rgba')}, inset 0 0 20px ${color.replace(')', ', 0.05)').replace('rgb', 'rgba')}`;
                 
                 document.getElementById('activeTag').style.color = color;
+                document.getElementById('activeTagTh').style.color = color;
                 document.getElementById('d-btn').style.backgroundColor = color;
                 document.getElementById('d-btn').style.boxShadow = `0 0 15px ${color.replace(')', ', 0.5)').replace('rgb', 'rgba')}`;
                 document.getElementById('d-btn').style.color = (color === 'var(--color-core)' || color === '#FFD700' || color === 'var(--color-or)') ? '#000' : '#fff';
-            }, 300);
+            }, 200);
         }
 
-        // --- ส่วนระบบ Carousel ที่ปรับแต่งใหม่ให้มีระบบ Auto และ Manual ---
+        // --- ส่วนระบบจัดระเบียบสไลเดอร์ รูปภาพอุปกรณ์ IDH ---
         let idhCurrentIndex = 0;
         const idhSlides = document.querySelectorAll('.idh-slide');
         const idhDots = document.querySelectorAll('.indicator-dot');
         const totalIdhSlides = idhSlides.length;
-        let idhAutoTimer; // กำหนดตัวแปรสำหรับพัก/รีเซ็ตเวลา Slide
+        let idhAutoTimer;
 
-        // ฟังก์ชันอัปเดต UI ของสไลด์ (ซ่อนอันเดิม โชว์อันใหม่)
         function updateSlideUI() {
             document.querySelectorAll('.idh-slide').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.indicator-dot').forEach(d => d.classList.remove('active'));
-            
             idhSlides[idhCurrentIndex].classList.add('active');
             idhDots[idhCurrentIndex].classList.add('active');
         }
 
-        // ฟังก์ชันเลื่อนอัตโนมัติ (จะใช้โดน setInterval)
         function autoCycleIdhCarousel() {
             if (totalIdhSlides === 0) return;
             idhCurrentIndex = (idhCurrentIndex + 1) % totalIdhSlides;
             updateSlideUI();
         }
 
-        // เริ่มต้นการเลื่อนอัตโนมัติ
         function startAutoSlide() {
             if (totalIdhSlides > 0) {
-                // เคลียร์อันเก่าก่อนกันการทับซ้อน
                 clearInterval(idhAutoTimer); 
                 idhAutoTimer = setInterval(autoCycleIdhCarousel, 4000);
             }
         }
 
-        // เมื่อกดปุ่มลูกศร ซ้าย-ขวา (-1 คือซ้าย, 1 คือขวา)
         function manualChangeSlide(direction) {
             idhCurrentIndex = idhCurrentIndex + direction;
-            // เช็คว่ากดเกินจำนวนที่มีไหม
-            if(idhCurrentIndex < 0) {
-                idhCurrentIndex = totalIdhSlides - 1;
-            } else if(idhCurrentIndex >= totalIdhSlides) {
-                idhCurrentIndex = 0;
-            }
+            if(idhCurrentIndex < 0) idhCurrentIndex = totalIdhSlides - 1;
+            else if(idhCurrentIndex >= totalIdhSlides) idhCurrentIndex = 0;
             updateSlideUI();
-            startAutoSlide(); // รีเซ็ตเวลาอัตโนมัติใหม่หลังจากที่ผู้ใช้กดเอง
+            startAutoSlide(); 
         }
 
-        // เมื่อผู้ใช้กดจุด Dot ด้านล่างภาพ
         function goToSlide(index) {
             idhCurrentIndex = index;
             updateSlideUI();
-            startAutoSlide(); // รีเซ็ตเวลา
+            startAutoSlide(); 
         }
 
-        // รัน Auto Slide ทันทีที่โหลดเสร็จ
         startAutoSlide();
 
-        // --- ส่วนแอนิเมชันตอนเลื่อนจอลงมา ---
-        const observerOptions = { threshold: 0.15, rootMargin: "0px 0px -100px 0px" };
+        // --- ส่วนการตรวจจับทิศทางการเลื่อนเพื่อทำ Animation ค่อยๆ โผล่ขึ้นมา ---
+        const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -574,3 +601,5 @@
     </script>
 </body>
 </html>
+
+```
